@@ -36,16 +36,21 @@ Rules:
 
 def _gemini(image_bytes: bytes, mime: str, prompt: str = PROMPT) -> str:
     import os
+    import random
     import time
 
     from google import genai
     from google.genai import types
     from google.genai.errors import APIError
 
-    client = genai.Client()
+    key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
+    if not key:
+        raise RuntimeError("GEMINI_API_KEY is not set. Put it in the .env file in the project root.")
+
+    client = genai.Client(api_key=key)
     model = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 
-    max_attempts = 3
+    max_attempts = int(os.getenv("GEMINI_MAX_ATTEMPTS", "6"))
 
     for attempt in range(max_attempts):
         try:
@@ -78,6 +83,13 @@ def _gemini(image_bytes: bytes, mime: str, prompt: str = PROMPT) -> str:
         except APIError as exc:
             status = getattr(exc, "code", None)
 
+            if status in (401, 403):
+                raise RuntimeError(
+                    f"Gemini rejected the credential ({status}). The key in .env is invalid, expired or revoked "
+                    f"(it ends in ...{key[-4:]}). Generate a fresh one at https://aistudio.google.com/apikey, "
+                    f"update GEMINI_API_KEY in .env and restart the server."
+                ) from exc
+
             # Retry only transient server/rate-limit errors.
             if status not in (429, 500, 502, 503, 504):
                 raise
@@ -85,11 +97,12 @@ def _gemini(image_bytes: bytes, mime: str, prompt: str = PROMPT) -> str:
             if attempt == max_attempts - 1:
                 raise
 
-            delay = 2 ** (attempt + 1)
+            # Jitter avoids all retries landing on the same congested second.
+            delay = min(2 ** (attempt + 1), 32) + random.uniform(0, 1)
 
             print(
                 f"[Gemini] Temporary API error {status}. "
-                f"Retrying in {delay} seconds..."
+                f"Retrying in {delay:.1f} seconds..."
             )
 
             time.sleep(delay)
