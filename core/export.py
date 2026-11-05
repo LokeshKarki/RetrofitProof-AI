@@ -10,6 +10,10 @@ REQUEST_COLUMNS = ["Date", "OTRSID", "TRSref/FaxidRef", "Cluster", "Country", "S
                    "Competitor", "Original code", "Description", "Festo part number", "Festo type code", "Sign",
                    "Remarks", "US-Competitorlink", "FoundinCRT:Yes/No/NA", "Projecteditor", "Product Type"]
 
+# what the standalone cross-reference download contains
+XREF_COLUMNS = ["SL.NO", "Customer material number", "Competitor", "Original code", "Description",
+                "Festo part number", "Festo type code", "Sign", "Remarks"]
+
 
 BOM_COLS = ["legacy_id", "role", "legacy_part", "part_number", "festo_article_no", "manufacturer", "qty", "status",
             "verification_status", "unit_price_inr", "rationale"]
@@ -76,37 +80,42 @@ def build_xref_workbook(result: dict) -> bytes:
     lfl = next(a for a in result["alternatives"] if a["name"] == "like_for_like")
     buf = BytesIO()
     with pd.ExcelWriter(buf, engine="openpyxl") as xw:
-        request_rows(lfl["bom"]).to_excel(xw, sheet_name="Sheet1", index=False)
+        request_rows(lfl["bom"])[XREF_COLUMNS].to_excel(xw, sheet_name="Sheet1", index=False)
         _style(xw.book)
     return buf.getvalue()
 
 
 def build_workbook(result: dict, alt_name: str) -> bytes:
     alt = next(a for a in result["alternatives"] if a["name"] == alt_name)
+    circuit = result["circuit"]
+    circuit = circuit if isinstance(circuit, dict) else circuit.model_dump()
     buf = BytesIO()
     with pd.ExcelWriter(buf, engine="openpyxl") as xw:
         pd.DataFrame({"RetrofitProof AI": [BANNER, f"Alternative: {alt['title']}", *alt["notes"]]}).to_excel(
-            xw, "Summary", index=False)
-        pd.DataFrame(result["flags"]).to_excel(xw, "Risk flags", index=False)
-        _bom_df(alt["bom_grouped"]).to_excel(xw, "BOM", index=False)
+            xw, sheet_name="Summary", index=False)
+        pd.DataFrame(circuit["components"]).to_excel(xw, sheet_name="Circuit components", index=False)
+        pd.DataFrame(circuit["connections"]).to_excel(xw, sheet_name="Circuit connections", index=False)
+        pd.DataFrame(circuit["io"]).to_excel(xw, sheet_name="Circuit IO list", index=False)
+        pd.DataFrame(result["flags"]).to_excel(xw, sheet_name="Risk flags", index=False)
+        _bom_df(alt["bom_grouped"]).to_excel(xw, sheet_name="BOM", index=False)
         lfl = next(a for a in result["alternatives"] if a["name"] == "like_for_like")
-        request_rows(lfl["bom"]).to_excel(xw, "Xref (request format)", index=False)
+        request_rows(lfl["bom"])[XREF_COLUMNS].to_excel(xw, sheet_name="Xref (request format)", index=False)
         pd.DataFrame(result.get("gaps", [])).assign(
             similar=lambda d: d["similar"].apply(lambda v: "; ".join(f"{x['code']}->{x['festo_type_code']}" for x in v))
             if len(d) else None, legacy_ids=lambda d: d["legacy_ids"].apply(", ".join) if len(d) else None
-        ).to_excel(xw, "Gaps", index=False)
-        pd.DataFrame(alt["io"]).to_excel(xw, "IO migration", index=False)
-        pd.DataFrame(alt["tests"]).to_excel(xw, "FAT-SAT tests", index=False)
+        ).to_excel(xw, sheet_name="Gaps", index=False)
+        pd.DataFrame(alt["io"]).to_excel(xw, sheet_name="IO migration", index=False)
+        pd.DataFrame(alt["tests"]).to_excel(xw, sheet_name="FAT-SAT tests", index=False)
         r = alt["roi"]
         roi_rows = [{"item": k, "value": v} for k, v in r["assumptions"].items()] + \
                    [{"item": k, "value": r[k]} for k in ("hardware_cost_inr", "investment_inr", "annual_saving_inr",
                                                          "payback_months", "eng_hours_saved_per_year",
                                                          "eng_cost_saved_per_year_inr", "note")]
-        pd.DataFrame(roi_rows).to_excel(xw, "ROI", index=False)
+        pd.DataFrame(roi_rows).to_excel(xw, sheet_name="ROI", index=False)
         sz = [{"component": k, **v["inputs"], "required_bore_mm": v["required_bore_mm"],
                "required_flow_lpm": v["required_flow_lpm"], "status": v["status"],
                "verify": "; ".join(v["verify"]), "assumptions": "; ".join(v["assumptions"])}
               for k, v in result["sizing"].items()]
-        pd.DataFrame(sz).to_excel(xw, "Sizing", index=False)
+        pd.DataFrame(sz).to_excel(xw, sheet_name="Sizing", index=False)
         _style(xw.book)
     return buf.getvalue()

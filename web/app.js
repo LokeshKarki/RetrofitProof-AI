@@ -190,7 +190,6 @@ function renderReview() {
       clearTimeout(timeoutId);
     }
   };
-  const low = S.circuit.components.filter(c => c.confidence < 0.7).map(c => c.id);
   const req = S.circuit.requirements || (S.circuit.requirements = {});
   const reqField = (k, label, num) => h("label", { class: "field" }, label,
     h("input", { type: num ? "number" : "text", step: "any", value: req[k] ?? "",
@@ -207,7 +206,6 @@ function renderReview() {
       h("div", { class: "card" }, h("h3", null, "Diagram"),
         S.image ? h("img", { class: "preview", src: S.image, alt: "Legacy diagram" })
           : h("div", { class: "noimg" }, "No diagram image for this case. Upload one on the left, or add data/cases/<case>/diagram.png"))),
-    low.length ? h("div", { class: "note warn" }, "Low-confidence components, verify against the drawing: ", h("b", null, low.join(", "))) : null,
     h("div", { class: "card" }, h("h3", null, "Components"), h("p", { class: "small muted" }, "Amber = confidence below 0.7. Red = potential safety function. Edits re-run the analysis automatically."),
       editTable("components", COMP_COLS, { id: "", type: "cylinder", qty: 1, safety_status: "unknown", confidence: 1 }, compRowCls)),
     h("div", { class: "grid g2" },
