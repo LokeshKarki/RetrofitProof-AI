@@ -177,6 +177,13 @@ tr.expand>td,.tablewrap tr.expand:hover>td{background:#f6f9fd}
 .bar{height:9px;border-radius:6px;background:#e1e9f3;overflow:hidden;min-width:120px}
 .bar>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--accent),#3f9ad8)}
 /* ---------- misc ---------- */
+a{color:var(--accent)}
+.plink{
+  display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--accent);
+  text-decoration:none;border-bottom:1px solid rgba(11,111,184,.35);
+}
+.plink::after{content:"\2197";font-size:11px;line-height:1}
+.plink:hover{color:var(--accent-dark);border-bottom-color:var(--accent-dark)}
 ul.tight{margin:4px 0 0;padding-left:18px}ul.tight li{margin:3px 0}
 .note{background:var(--info-bg);color:#0a4f85;border:1px solid #c7ddf2;border-radius:10px;padding:10px 13px;margin-bottom:12px;font-size:13px}
 .note.warn{background:var(--warn-bg);color:var(--warn);border-color:#f0ddb8}

@@ -310,11 +310,22 @@ async function sendFeedback(l, cand, verdict) {
     runAnalyze();
   } catch (e) { toast(e.message, true); }
 }
-function festoCell(l) {
-  const x = l.xref, ev = evidenceText(l), t = x && x.candidates && x.candidates[0];
-  return h("td", null, h("b", null, l.part_number),
-    l.festo_article_no ? h("div", { class: "small muted" }, "Art. " + l.festo_article_no) : null,
-    ev ? h("div", { class: "small muted" }, ev) : null,
+const festoUrl = art => `https://www.festo.com/ph/en/a/${encodeURIComponent(art)}`;
+function festoPartCell(l) {
+  const art = l.festo_article_no;
+  return h("td", null,
+    art ? h("b", null, art) : h("span", { class: "muted" }, l.part_number === "-" ? "-" : "not recorded"),
+    !art && l.part_number !== "-" ? h("div", { class: "small muted" }, "type code only, ask Festo for the article number") : null);
+}
+function festoCodeCell(l) {
+  const x = l.xref, art = l.festo_article_no, ev = evidenceText(l), t = x && x.candidates && x.candidates[0];
+  const info = [t ? t.tier_label : null, ev].filter(Boolean).join(" \u00b7 ");
+  return h("td", null,
+    art ? h("a", { class: "plink", href: festoUrl(art), target: "_blank", rel: "noopener noreferrer",
+      title: `Open ${l.part_number} on festo.com`, onclick: e => e.stopPropagation() }, l.part_number)
+      : h("b", null, l.part_number),
+    info ? h("div", { class: "small muted" }, info) : null,
+    l.verification_status === "cross-reference" ? h("div", { class: "small muted" }, "verify ratings on the product page") : null,
     x && x.conflict ? h("div", { class: "small", style: "color:var(--warn)" }, "other answers seen, expand row") : null,
     x && x.note && l.part_number === "-" ? h("div", { class: "small muted" }, x.note) : null);
 }
@@ -344,13 +355,13 @@ function renderAlts() {
     const tr = h("tr", { class: (l.checks.length || l.xref) ? "clickable" : "" },
       h("td", null, h("b", null, l.legacy_id)), h("td", null, l.role.replaceAll("_", " ")),
       h("td", null, l.legacy_part || h("span", { class: "muted" }, "-"), l.legacy_label ? h("div", { class: "small muted" }, l.legacy_label) : null),
-      festoCell(l), h("td", null, l.qty), h("td", null, statusChip(l.status)),
+      festoPartCell(l), festoCodeCell(l), h("td", null, l.qty), h("td", null, statusChip(l.status)),
       h("td", { class: "small muted" }, top && top.remark ? top.remark : l.rationale), btns);
     tb.append(tr);
     const alts = l.xref && l.xref.candidates && l.xref.candidates.length > 1 ? l.xref.candidates.slice(1) : [];
     const sim = l.xref && l.xref.similar && l.xref.similar.length ? l.xref.similar : [];
     if (l.checks.length || alts.length || sim.length) {
-      const ex = h("tr", { class: "expand", style: "display:none" }, h("td", { colspan: 8 },
+      const ex = h("tr", { class: "expand", style: "display:none" }, h("td", { colspan: 9 },
         h("div", { class: "checks" }, l.checks.map(c => h("div", { class: "check" },
           h("span", { class: "sym " + c.status }, c.status === "passed" ? "✓" : c.status === "failed" ? "✕" : "?"), h("b", null, c.check), h("span", { class: "muted" }, c.detail))),
           alts.map(c => h("div", { class: "check" }, h("span", { class: "sym unknown" }, "?"), h("b", null, "Other answer"),
@@ -363,7 +374,7 @@ function renderAlts() {
     }
   });
   sec.append(h("div", { class: "card" }, h("div", { class: "tablewrap", style: "max-height:none" }, h("table", null,
-    h("thead", null, h("tr", null, ["Item(s)", "Role", "Competitor part", "Festo type code", "Qty", "Status", "Differences / rationale", ""].map(x => h("th", null, x)))), tb)),
+    h("thead", null, h("tr", null, ["Item(s)", "Role", "Competitor part", "Festo part number", "Festo type code", "Qty", "Status", "Differences / rationale", ""].map(x => h("th", null, x)))), tb)),
     h("p", { class: "small muted" }, "Cross-reference answers are what Festo engineers replied in earlier requests (or what a series pattern suggests). They are not datasheet-verified. DEMO-* parts come from the placeholder sizing catalog.")));
 }
 
