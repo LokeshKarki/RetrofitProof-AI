@@ -6,7 +6,7 @@ const S = { circuit: null, result: null, roi: {}, roiDefaults: {}, alt: "instrum
             caseName: null, image: null, seq: 0, timer: null, evalRows: null };
 
 const SECTIONS = [
-  ["review", "Review extraction"], ["risk", "Risk flags & graph"], ["sizing", "Sizing"],
+  ["review", "Review extraction"], ["risk", "Risk flags & graph"],
   ["alts", "Retrofit alternatives"], ["tests", "Tests & I/O"], ["roi", "ROI & export"], ["eval", "Evaluation"]];
 const COMP_TYPES = ["cylinder", "valve", "service_unit", "sensor", "fitting", "other", "pressure_switch", "gauge", "regulator",
   "shutoff_valve", "shuttle_valve", "silencer", "manifold", "vacuum_ejector", "vacuum_pad", "accessory"];
@@ -297,34 +297,7 @@ function renderRisk() {
         h("div", null, h("div", { class: "code" }, f.code), f.message))) : h("p", { class: "muted" }, "No flags.")));
 }
 
-/* ---------- 3. sizing ---------- */
-function renderSizing() {
-  const sec = $("#s-sizing"); sec.replaceChildren();
-  sec.append(h("h2", null, "3 · Sizing assessment"),
-    h("p", { class: "sub" }, "Screening-level calculations with every input and assumption visible. Final sizing requires engineering verification."));
-  const items = Object.values(S.result.sizing);
-  if (!items.length) sec.append(h("div", { class: "card muted" }, "No cylinders to size."));
-  const g = h("div", { class: "grid g2" });
-  items.forEach(s => {
-    const i = s.inputs, ok = s.existing_bore_ok;
-    g.append(h("div", { class: "card" },
-      h("div", { class: "row", style: "justify-content:space-between" }, h("h3", null, "Cylinder " + s.component_id),
-        ok == null ? h("span", { class: "chip grey" }, "unresolved") : h("span", { class: "chip " + (ok ? "ok" : "bad") }, ok ? "existing bore OK" : "existing bore too small")),
-      h("table", null, h("tbody", null, [
-        ["Load", i.load_kg != null ? i.load_kg + " kg" : "unknown"], ["Pressure", i.pressure_bar != null ? i.pressure_bar + " bar" : "unknown"],
-        ["Safety factor / efficiency", `${i.safety_factor} / ${i.efficiency}`], ["Existing bore", i.existing_bore_mm != null ? i.existing_bore_mm + " mm" : "unknown"],
-        ["Theoretical bore needed", s.required_bore_mm != null ? s.required_bore_mm + " mm" : "unresolved"],
-        ["Stroke / time", `${i.stroke_mm ?? "?"} mm / ${i.stroke_time_s ?? "?"} s`],
-        ["Avg. air flow needed", s.required_flow_lpm != null ? s.required_flow_lpm + " l/min (free air)" : "unresolved"]
-      ].map(([a, b]) => h("tr", null, h("td", { class: "muted" }, a), h("td", null, h("b", null, b)))))),
-      s.notes.map(n => h("div", { class: "note warn", style: "margin-top:10px" }, n)),
-      h("div", { class: "small", style: "margin-top:10px" }, h("b", null, "Assumptions"), h("ul", { class: "tight" }, s.assumptions.map(a => h("li", null, a)))),
-      h("div", { class: "small", style: "margin-top:8px" }, h("b", null, "Still to verify"), h("ul", { class: "tight" }, s.verify.map(a => h("li", null, a))))));
-  });
-  sec.append(g);
-}
-
-/* ---------- 4. alternatives ---------- */
+/* ---------- 3. alternatives ---------- */
 function altSwitch(onPick) {
   return h("div", { class: "seg" }, S.result.alternatives.map(a => h("button", { class: a.name === S.alt ? "on" : "",
     onclick: () => { S.alt = a.name; renderResults(); } }, ALT_TITLES[a.name] || a.title)));
@@ -358,7 +331,7 @@ function gapsPanel() {
 function renderAlts() {
   const sec = $("#s-alts"); sec.replaceChildren();
   const a = altByName(S.alt), rows = a.bom_grouped || a.bom;
-  sec.append(h("h2", null, "4 · Retrofit alternatives"),
+  sec.append(h("h2", null, "3 · Retrofit alternatives"),
     h("p", { class: "sub" }, "Part matches come from real earlier cross-reference requests, with evidence counts. Sizing and function checks are deterministic. Click a row to see the checks."),
     altSwitch(renderAlts), ...a.notes.map(n => h("div", { class: "note" }, n)), gapsPanel());
   const tb = h("tbody");
@@ -394,7 +367,7 @@ function renderAlts() {
     h("p", { class: "small muted" }, "Cross-reference answers are what Festo engineers replied in earlier requests (or what a series pattern suggests). They are not datasheet-verified. DEMO-* parts come from the placeholder sizing catalog.")));
 }
 
-/* ---------- 5. tests + I/O ---------- */
+/* ---------- 4. tests + I/O ---------- */
 function renderTests() {
   const sec = $("#s-tests"); sec.replaceChildren();
   const a = altByName(S.alt);
@@ -407,7 +380,7 @@ function renderTests() {
       h("td", null, t.procedure), h("td", null, t.pass_criterion), h("td", null, t.validates_assumption), h("td", null, statusChip(t.status.startsWith("Proposed") ? "Proposed" : t.status)))));
   };
   filter.addEventListener("input", draw); draw();
-  sec.append(h("h2", null, "5 · Test plan & I/O migration"),
+  sec.append(h("h2", null, "4 · Test plan & I/O migration"),
     h("p", { class: "sub" }, "Every test names the requirement or assumption it verifies. All are proposals until an engineer approves the acceptance criteria."),
     altSwitch(renderTests),
     h("div", { class: "card" }, h("h3", null, `I/O migration (${a.io.length} points)`), h("div", { class: "tablewrap" }, h("table", null,
@@ -419,7 +392,7 @@ function renderTests() {
         h("thead", null, h("tr", null, ["ID", "Component", "Requirement", "Test", "Procedure", "Pass criterion", "Validates", "Status"].map(x => h("th", null, x)))), tb))));
 }
 
-/* ---------- 6. ROI + export ---------- */
+/* ---------- 5. ROI + export ---------- */
 function renderRoi() {
   const sec = $("#s-roi"); sec.replaceChildren();
   const alts = S.result.alternatives, a = altByName(S.alt), r = a.roi, maxHw = Math.max(1, ...alts.map(x => x.roi.hardware_cost_inr));
@@ -445,7 +418,7 @@ function renderRoi() {
       document.body.append(a2); a2.click(); a2.remove(); URL.revokeObjectURL(url); toast("Cross-reference sheet downloaded");
     } catch (e) { toast(e.message, true); } finally { dlx.disabled = false; }
   };
-  sec.append(h("h2", null, "6 · ROI & export"),
+  sec.append(h("h2", null, "5 · ROI & export"),
     h("p", { class: "sub" }, "Assumption fields are placeholders, not benchmarks. Replace them with customer figures before using any number."),
     altSwitch(renderRoi),
     h("div", { class: "metrics" },
@@ -461,7 +434,7 @@ function renderRoi() {
         h("p", { class: "small muted" }, "Electrification is a screening estimate only."), h("div", { style: "margin-top:12px" }, dl, dlx))));
 }
 
-/* ---------- 7. evaluation ---------- */
+/* ---------- 6. evaluation ---------- */
 async function loadEval() {
   try { S.evalRows = await (await api("/api/eval")).json(); renderEval(); } catch (e) { toast(e.message, true); }
   try { S.holdout = await (await api("/api/xref/eval")).json(); renderEval(); } catch (e) { toast("Hold-out evaluation: " + e.message, true); }
@@ -488,7 +461,7 @@ function holdoutCard() {
 }
 function renderEval() {
   const sec = $("#s-eval"); sec.replaceChildren();
-  sec.append(h("h2", null, "7 · Evaluation"), h("p", { class: "sub" }, "Two different things: real hold-out accuracy of the cross-reference, and a pipeline smoke test."),
+  sec.append(h("h2", null, "6 · Evaluation"), h("p", { class: "sub" }, "Two different things: real hold-out accuracy of the cross-reference, and a pipeline smoke test."),
     holdoutCard(),
     h("h3", null, "Pipeline smoke test (synthetic cases)"),
     h("div", { class: "note warn" }, "These cases and baselines were written by the tool's author, and the case 3 expected codes are also loaded into the knowledge base. The scores prove the pipeline runs end to end; they are NOT accuracy evidence. Use the hold-out numbers above."));
@@ -521,7 +494,7 @@ function renderResults() {
     h("div", { class: "kpi" }, h("div", { class: "v" }, cov.direct), h("div", { class: "l" }, "Direct equivalents")),
     h("div", { class: "kpi" }, h("div", { class: "v" }, Math.max(1, Math.round(r.runtime_s * 1000)) + " ms"), h("div", { class: "l" }, "Analysis time")));
   const b = $("#badge-risk"); b.style.display = crit ? "" : "none"; b.textContent = crit;
-  renderRisk(); renderSizing(); renderAlts(); renderTests(); renderRoi();
+  renderRisk(); renderAlts(); renderTests(); renderRoi();
 }
 
 /* ---------- boot ---------- */
@@ -532,7 +505,7 @@ async function loadCase(name) {
 async function boot() {
   try {
     const meta = await (await api("/api/meta")).json();
-    $("#banner").textContent = meta.banner; S.roiDefaults = meta.roi_defaults; S.roi = { ...meta.roi_defaults };
+    S.roiDefaults = meta.roi_defaults; S.roi = { ...meta.roi_defaults };
     S.cases = await (await api("/api/cases")).json();
     buildNav();
     if (S.cases.length) await loadCase(S.cases[0]); else toast("No demo cases found. Run python tools/make_cases.py", true);

@@ -50,16 +50,6 @@ body{
 .kpi.crit{background:rgba(255,120,110,.14);border-color:rgba(255,150,142,.4)}
 .kpi.crit .v{color:#ffb4ab}
 
-/* ---------- advisory banner ---------- */
-.banner{
-  display:flex;align-items:center;gap:9px;background:var(--warn-bg);color:var(--warn);
-  border-bottom:1px solid #f0ddb8;padding:9px 32px;font-size:12.5px;font-weight:600;letter-spacing:.1px;
-}
-.banner::before{
-  content:"!";flex:none;width:17px;height:17px;border-radius:50%;background:var(--warn);color:#fff;
-  font-size:11px;font-weight:800;display:grid;place-items:center;line-height:1;
-}
-
 /* ---------- layout ---------- */
 .layout{display:grid;grid-template-columns:244px 1fr;gap:26px;padding:24px 32px 48px;max-width:1540px;margin:0 auto}
 .steps{position:sticky;top:88px;align-self:start;display:flex;flex-direction:column;gap:3px}
