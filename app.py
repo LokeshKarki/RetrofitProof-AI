@@ -14,7 +14,7 @@ st.set_page_config(page_title="RetrofitProof AI", layout="wide")
 CASES = Path(__file__).parent / "data" / "cases"
 
 st.title("RetrofitProof AI")
-st.caption("Legacy pneumatic circuit → reviewable Festo retrofit options → test-backed BOM and ROI")
+st.caption("Brownfield pneumatic circuit → reviewable Festo retrofit options → test-backed BOM and ROI")
 st.warning(BANNER)
 
 

@@ -156,6 +156,61 @@ function editTable(key, cols, blank, rowCls) {
 }
 
 /* ---------- 1. review ---------- */
+function partSearchResult(r, code) {
+  const live = (r.candidates || []).filter(c => !c.rejected);
+  const head = h("p", { class: "small muted", style: "margin:14px 0 8px" },
+    [r.code_norm || code, r.competitor, r.description].filter(Boolean).join(" \u00b7 ")
+    + ` \u2014 found in ${r.n_requests} earlier request${r.n_requests === 1 ? "" : "s"}`);
+  if (!live.length) {
+    return h("div", null, head,
+      h("div", { class: "note warn" }, r.note || "No Festo equivalent recorded for this code."),
+      (r.similar || []).length ? h("p", { class: "small muted" }, "Same-series hints, not matches: "
+        + r.similar.map(y => `${y.code} \u2192 ${y.festo_type_code}`).join(" \u00b7 ")) : null);
+  }
+  const tierCls = t => t === "T1" ? "ok" : t === "T2" ? "warn" : "info";
+  return h("div", null, head,
+    h("div", { class: "tablewrap", style: "max-height:320px" }, h("table", null,
+      h("thead", null, h("tr", null, ["", "Festo part number", "Festo type code", "Match", "Evidence", "Remarks"].map(x => h("th", null, x)))),
+      h("tbody", null, live.map((c, i) => h("tr", null,
+        h("td", null, h("span", { class: "chip " + (i ? "grey" : "ok") }, i ? "other" : "best")),
+        h("td", null, c.festo_article_no ? h("b", null, c.festo_article_no) : h("span", { class: "muted" }, "not recorded")),
+        h("td", null, c.festo_article_no
+          ? h("a", { class: "plink", href: festoUrl(c.festo_article_no), target: "_blank", rel: "noopener noreferrer" }, c.festo_type_code)
+          : h("b", null, c.festo_type_code)),
+        h("td", null, h("span", { class: "chip " + tierCls(c.tier) }, c.tier_label)),
+        h("td", { class: "small muted" }, c.method === "series_rule" ? "series pattern, never seen in a request"
+          : `seen in ${c.n_requests} request${c.n_requests === 1 ? "" : "s"}, ${c.n_agree} agree` + (c.curated ? " \u00b7 curated" : "")),
+        h("td", { class: "small muted" }, c.remark || ""))))))
+    ,
+    r.conflict ? h("p", { class: "small", style: "color:var(--warn);margin-top:8px" },
+      "Earlier requests gave different answers for this code. Confirm the choice with an engineer.") : null);
+}
+function partSearchCard() {
+  const codeIn = h("input", { type: "text", placeholder: "e.g. VHS30-F03-M-D" });
+  const mfrIn = h("input", { type: "text", placeholder: "e.g. SMC (optional)" });
+  const out = h("div");
+  const btn = h("button", { class: "btn" }, "Find Festo alternative");
+  const run = async () => {
+    const code = codeIn.value.trim();
+    if (!code) return toast("Enter a competitor part number or type code", true);
+    btn.disabled = true;
+    out.replaceChildren(h("p", { class: "small muted", style: "margin-top:12px" }, "Searching the cross-reference history\u2026"));
+    try {
+      const r = await (await api(`/api/xref/lookup?code=${encodeURIComponent(code)}&competitor=${encodeURIComponent(mfrIn.value.trim())}`)).json();
+      out.replaceChildren(partSearchResult(r, code));
+    } catch (e) {
+      out.replaceChildren(h("div", { class: "note warn", style: "margin-top:12px" }, "Lookup failed: " + e.message));
+    } finally { btn.disabled = false; }
+  };
+  btn.onclick = run;
+  codeIn.addEventListener("keydown", e => { if (e.key === "Enter") run(); });
+  return h("div", { class: "card" }, h("h3", null, "Single part cross-reference"),
+    h("p", { class: "small muted" }, "Look up one competitor part number or type code against the earlier request history, without loading a circuit."),
+    h("div", { class: "row" },
+      h("label", { class: "field" }, "Competitor part number / type code", codeIn),
+      h("label", { class: "field" }, "Manufacturer", mfrIn), btn),
+    out);
+}
 function renderReview() {
   const sec = $("#s-review"); sec.replaceChildren();
   const cases = S.cases || [];
@@ -164,11 +219,10 @@ function renderReview() {
     cases.map(c => h("option", { value: c }, c)));
   sel.value = S.caseName || "";
   const imgIn = h("input", { type: "file", accept: "image/*,.pdf,application/pdf" });
-  const ioIn = h("input", { type: "file", accept: ".csv,.xlsx" });
   const btn = h("button", { class: "btn" }, "Extract with AI");
   btn.onclick = async () => {
     if (!imgIn.files[0]) return toast("Choose a diagram image or PDF first", true);
-    const fd = new FormData(); fd.append("image", imgIn.files[0]); if (ioIn.files[0]) fd.append("io", ioIn.files[0]);
+    const fd = new FormData(); fd.append("image", imgIn.files[0]);
     btn.disabled = true; btn.replaceChildren(h("span", { class: "spin" }), "Reading diagram…");
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minutes for large drawings / model latency
@@ -205,12 +259,13 @@ function renderReview() {
         h("div", { class: "row" }, h("label", { class: "field" }, "Recent cases", sel)),
         h("p", { class: "small muted" }, "Nothing is loaded until a case is selected. Recent-case extractions are simulated with deliberate errors so the correction step has something to fix."),
         h("div", { class: "dz" }, h("div", { class: "row" },
-          h("label", { class: "field" }, "Diagram (image or PDF)", imgIn), h("label", { class: "field" }, "I/O list (CSV/XLSX)", ioIn), btn))),
+          h("label", { class: "field" }, "Diagram (image or PDF)", imgIn), btn))),
       h("div", { class: "card" }, h("h3", null, "Diagram"),
         S.image ? h("img", { class: "preview", src: S.image, alt: "Legacy diagram" })
           : h("div", { class: "noimg" }, S.caseName
             ? "No diagram image for this case. Upload one on the left, or add data/cases/<case>/diagram.png"
             : "No diagram loaded. Select a recent case or upload a diagram on the left."))),
+    partSearchCard(),
     h("div", { class: "card" }, h("h3", null, "Components"), h("p", { class: "small muted" }, "Amber = confidence below 0.7. Red = potential safety function. Edits re-run the analysis automatically."),
       editTable("components", COMP_COLS, { id: "", type: "cylinder", qty: 1, safety_status: "unknown", confidence: 1 }, compRowCls)),
     h("div", { class: "grid g2" },
@@ -344,7 +399,7 @@ function renderAlts() {
   const a = altByName(S.alt), rows = a.bom_grouped || a.bom;
   sec.append(h("h2", null, "3 · Retrofit alternatives"),
     h("p", { class: "sub" }, "Part matches come from real earlier cross-reference requests, with evidence counts. Sizing and function checks are deterministic. Click a row to see the checks."),
-    altSwitch(renderAlts), ...a.notes.map(n => h("div", { class: "note" }, n)), gapsPanel());
+    altSwitch(renderAlts));
   const tb = h("tbody");
   rows.forEach(l => {
     const real = l.xref && l.xref.candidates && l.xref.candidates.length && l.part_number !== "-" && l.verification_status === "cross-reference";
@@ -375,7 +430,9 @@ function renderAlts() {
   });
   sec.append(h("div", { class: "card" }, h("div", { class: "tablewrap", style: "max-height:none" }, h("table", null,
     h("thead", null, h("tr", null, ["Item(s)", "Role", "Competitor part", "Festo part number", "Festo type code", "Qty", "Status", "Differences / rationale", ""].map(x => h("th", null, x)))), tb)),
-    h("p", { class: "small muted" }, "Cross-reference answers are what Festo engineers replied in earlier requests (or what a series pattern suggests). They are not datasheet-verified. DEMO-* parts come from the placeholder sizing catalog.")));
+    h("p", { class: "small muted" }, "Cross-reference answers are what Festo engineers replied in earlier requests (or what a series pattern suggests). They are not datasheet-verified. DEMO-* parts come from the placeholder sizing catalog.")),
+    ...a.notes.map(n => h("div", { class: "note" }, n)),
+    gapsPanel());
 }
 
 /* ---------- 4. tests + I/O ---------- */

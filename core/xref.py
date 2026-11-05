@@ -255,6 +255,7 @@ class XrefIndex:
                         "Festo engineers found no equivalent for this code in earlier requests." if nomatch
                         else "Code not seen in any request and no series rule applies. Request datasheet.")
         return {"query": str(code or ""), "code_norm": n, "competitor": comp, "method": method,
+                "description": _best(Counter(r["description"] for r in rows if not is_empty(r.get("description")))),
                 "candidates": cands, "n_requests": len(all_reqs), "n_no_match_requests": len(nomatch),
                 "conflict": len([c for c in cands if not c["rejected"]]) > 1, "note": note,
                 "similar": overridden or (self.similar(n) if method == "none" and not nomatch else [])}
