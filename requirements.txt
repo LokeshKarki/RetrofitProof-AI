@@ -1,0 +1,14 @@
+starlette
+uvicorn
+python-multipart
+pydantic
+networkx
+pandas
+openpyxl
+pyyaml
+google-genai
+pillow
+python-dotenv
+# optional: the older Streamlit UI (app.py) still works
+# streamlit
+pypdf

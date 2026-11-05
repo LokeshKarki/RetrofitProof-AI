@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+.venv/
+cache/
+__pycache__/
+*.xlsx
+eval_results.csv

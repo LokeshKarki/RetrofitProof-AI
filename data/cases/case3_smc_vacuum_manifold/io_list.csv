@@ -1,0 +1,11 @@
+tag,direction,linked_component,description,plc_address
+Y33A,DO,P33,Valve 1 coil A (example),%Q0.0
+Y33B,DO,P33,Valve 1 coil B (example),%Q0.1
+Y35A,DO,P35,Valve 2 coil A (example),%Q0.2
+Y35B,DO,P35,Valve 2 coil B (example),%Q0.3
+Y37A,DO,P37,Valve 3 coil A (example),%Q0.4
+Y37B,DO,P37,Valve 3 coil B (example),%Q0.5
+Y39A,DO,P39,Valve 4 coil A (example),%Q0.6
+Y39B,DO,P39,Valve 4 coil B (example),%Q0.7
+Y14,DO,P14,Vacuum valve coil (example),%Q1.0
+X8,DI,P8,Supply pressure switch (example),%I0.0

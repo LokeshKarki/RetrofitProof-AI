@@ -1,0 +1,891 @@
+{
+  "components": [
+    {
+      "id": "P1",
+      "type": "fitting",
+      "label": "Push-in tee 16 mm",
+      "confidence": 1.0,
+      "part_number": "KQ2T16-00A",
+      "callout_no": 1,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P2",
+      "type": "shutoff_valve",
+      "label": "Shut-off / relief valve G3/8",
+      "confidence": 1.0,
+      "part_number": "VHS30-F03-M-D",
+      "callout_no": 2,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P3",
+      "type": "regulator",
+      "label": "Filter regulator G3/8",
+      "confidence": 1.0,
+      "part_number": "AW30-F03H-D",
+      "callout_no": 3,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P4",
+      "type": "accessory",
+      "label": "Bracket for AW30",
+      "confidence": 1.0,
+      "part_number": "Y300T-D",
+      "callout_no": 4,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P5",
+      "type": "gauge",
+      "label": "Pressure gauge",
+      "confidence": 1.0,
+      "part_number": "G36-10-01-L",
+      "callout_no": 5,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P6",
+      "type": "silencer",
+      "label": "Silencer R1/4 (shut-off exhaust)",
+      "confidence": 1.0,
+      "part_number": "AN20-02",
+      "callout_no": 6,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P7",
+      "type": "fitting",
+      "label": "Male connector 16 mm x R3/8",
+      "confidence": 1.0,
+      "part_number": "KQ2H16-03AS",
+      "callout_no": 7,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P8",
+      "type": "pressure_switch",
+      "label": "Pressure switch M5",
+      "confidence": 1.0,
+      "part_number": "ISE20-P-M5-L",
+      "callout_no": 8,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P9",
+      "type": "fitting",
+      "label": "Male connector 16 mm x R3/8",
+      "confidence": 1.0,
+      "part_number": "KQ2H16-03AS",
+      "callout_no": 9,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P10",
+      "type": "other",
+      "label": "Quick coupling DN 7.2 (no code on drawing)",
+      "confidence": 1.0,
+      "part_number": null,
+      "callout_no": 10
+    },
+    {
+      "id": "P11",
+      "type": "fitting",
+      "label": "Push-in tee 16 mm",
+      "confidence": 1.0,
+      "part_number": "KQ2T16-00A",
+      "callout_no": 11,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P12",
+      "type": "fitting",
+      "label": "Reducer 6 / 10 mm",
+      "confidence": 1.0,
+      "part_number": "KQ2R06-10A",
+      "callout_no": 12,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P13",
+      "type": "fitting",
+      "label": "Reducer 10 / 16 mm",
+      "confidence": 1.0,
+      "part_number": "KQ2R10-16A",
+      "callout_no": 13,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P14",
+      "type": "valve",
+      "label": "3/2 solenoid valve (vacuum supply)",
+      "confidence": 1.0,
+      "part_number": "VT307-5DZ1-01F-Q",
+      "callout_no": 14,
+      "manufacturer": "SMC",
+      "valve_function": "3/2 single solenoid spring return"
+    },
+    {
+      "id": "P15",
+      "type": "accessory",
+      "label": "Accessory for VT307",
+      "confidence": 1.0,
+      "part_number": "DXT152-25-1A",
+      "callout_no": 15,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P16",
+      "type": "fitting",
+      "label": "Male connector 6 mm x R1/8",
+      "confidence": 1.0,
+      "part_number": "KQ2H06-01AS",
+      "callout_no": 16,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P17",
+      "type": "fitting",
+      "label": "Male connector 6 mm x R1/8",
+      "confidence": 1.0,
+      "part_number": "KQ2H06-01AS",
+      "callout_no": 17,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P18",
+      "type": "silencer",
+      "label": "Silencer R1/8 (valve exhaust)",
+      "confidence": 1.0,
+      "part_number": "AN10-01",
+      "callout_no": 18,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P19",
+      "type": "fitting",
+      "label": "Push-in tee 6 mm",
+      "confidence": 1.0,
+      "part_number": "KQ2T06-00A",
+      "callout_no": 19,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P20",
+      "type": "vacuum_pad",
+      "label": "Vacuum pad, bellows, dia 40",
+      "confidence": 1.0,
+      "part_number": "ZPT40BGN-B6",
+      "callout_no": 20,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P21",
+      "type": "fitting",
+      "label": "Male connector 6 mm x M6",
+      "confidence": 1.0,
+      "part_number": "KQ2H06-M6A",
+      "callout_no": 21,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P22",
+      "type": "fitting",
+      "label": "Push-in tee 6 mm",
+      "confidence": 1.0,
+      "part_number": "KQ2T06-00A",
+      "callout_no": 22,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P23",
+      "type": "vacuum_pad",
+      "label": "Vacuum pad, bellows, dia 40",
+      "confidence": 1.0,
+      "part_number": "ZPT40BGN-B6",
+      "callout_no": 23,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P24",
+      "type": "fitting",
+      "label": "Male connector 6 mm x M6",
+      "confidence": 1.0,
+      "part_number": "KQ2H06-M6A",
+      "callout_no": 24,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P25",
+      "type": "manifold",
+      "label": "Manifold base SY9000, 4 stations",
+      "confidence": 1.0,
+      "part_number": "SS5Y9-23-04-00F-Q",
+      "callout_no": 25,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P26",
+      "type": "silencer",
+      "label": "Silencer R3/8",
+      "confidence": 1.0,
+      "part_number": "AN30-03",
+      "callout_no": 26,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P27",
+      "type": "silencer",
+      "label": "Silencer R3/8",
+      "confidence": 1.0,
+      "part_number": "AN30-03",
+      "callout_no": 27,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P28",
+      "type": "silencer",
+      "label": "Silencer R3/8",
+      "confidence": 1.0,
+      "part_number": "AN30-03",
+      "callout_no": 28,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P29",
+      "type": "silencer",
+      "label": "Silencer R3/8",
+      "confidence": 1.0,
+      "part_number": "AN30-03",
+      "callout_no": 29,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P30",
+      "type": "fitting",
+      "label": "Male connector 12 mm x R3/8",
+      "confidence": 1.0,
+      "part_number": "KQ2H12-03AS",
+      "callout_no": 30,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P31",
+      "type": "fitting",
+      "label": "Male connector 12 mm x R3/8",
+      "confidence": 1.0,
+      "part_number": "KQ2H12-03AS",
+      "callout_no": 31,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P32",
+      "type": "fitting",
+      "label": "Push-in tee 12 / 16 mm",
+      "confidence": 1.0,
+      "part_number": "KQ2T12-16A",
+      "callout_no": 32,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P33",
+      "type": "valve",
+      "label": "5/3 closed-centre valve 1",
+      "confidence": 1.0,
+      "part_number": "SY9320-5LOU-C10F-Q",
+      "callout_no": 33,
+      "manufacturer": "SMC",
+      "valve_function": "5/3 closed centre double solenoid"
+    },
+    {
+      "id": "P34",
+      "type": "accessory",
+      "label": "Lead wire for valve 1",
+      "confidence": 1.0,
+      "part_number": "SY100-68-A-30",
+      "callout_no": 34,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P35",
+      "type": "valve",
+      "label": "5/3 closed-centre valve 2",
+      "confidence": 1.0,
+      "part_number": "SY9320-5LOU-C10F-Q",
+      "callout_no": 35,
+      "manufacturer": "SMC",
+      "valve_function": "5/3 closed centre double solenoid"
+    },
+    {
+      "id": "P36",
+      "type": "accessory",
+      "label": "Lead wire for valve 2",
+      "confidence": 1.0,
+      "part_number": "SY100-68-A-30",
+      "callout_no": 36,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P37",
+      "type": "valve",
+      "label": "5/3 closed-centre valve 3",
+      "confidence": 1.0,
+      "part_number": "SY9320-5LOU-C10F-Q",
+      "callout_no": 37,
+      "manufacturer": "SMC",
+      "valve_function": "5/3 closed centre double solenoid"
+    },
+    {
+      "id": "P38",
+      "type": "accessory",
+      "label": "Lead wire for valve 3",
+      "confidence": 1.0,
+      "part_number": "SY100-68-A-30",
+      "callout_no": 38,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P39",
+      "type": "valve",
+      "label": "5/3 closed-centre valve 4",
+      "confidence": 1.0,
+      "part_number": "SY9320-5LOU-C10F-Q",
+      "callout_no": 39,
+      "manufacturer": "SMC",
+      "valve_function": "5/3 closed centre double solenoid"
+    },
+    {
+      "id": "P40",
+      "type": "accessory",
+      "label": "Lead wire for valve 4",
+      "confidence": 1.0,
+      "part_number": "SY100-68-A-30",
+      "callout_no": 40,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P41",
+      "type": "vacuum_ejector",
+      "label": "Vacuum ejector with silencer",
+      "confidence": 1.0,
+      "part_number": "ZH10DSA-06-06-08",
+      "callout_no": 41,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P42",
+      "type": "silencer",
+      "label": "Push-in silencer 8 mm",
+      "confidence": 1.0,
+      "part_number": "AN15-C08",
+      "callout_no": 42,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P43",
+      "type": "other",
+      "label": "Unnumbered unit 1 of 2 (maker not confirmed)",
+      "confidence": 0.5,
+      "part_number": "PMHPD3T200-20Z",
+      "callout_no": 43,
+      "manufacturer": "SMC"
+    },
+    {
+      "id": "P44",
+      "type": "other",
+      "label": "Unnumbered unit 2 of 2 (maker not confirmed)",
+      "confidence": 0.5,
+      "part_number": "PMHPD3T200-20Z",
+      "callout_no": 44,
+      "manufacturer": "SMC"
+    }
+  ],
+  "connections": [
+    {
+      "from_component": "P7",
+      "from_port": null,
+      "to_component": "P2",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P2",
+      "from_port": null,
+      "to_component": "P3",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P3",
+      "from_port": null,
+      "to_component": "P5",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P3",
+      "from_port": null,
+      "to_component": "P8",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P3",
+      "from_port": null,
+      "to_component": "P9",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P9",
+      "from_port": null,
+      "to_component": "P1",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P1",
+      "from_port": null,
+      "to_component": "P10",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P1",
+      "from_port": null,
+      "to_component": "P11",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P11",
+      "from_port": null,
+      "to_component": "P32",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P11",
+      "from_port": null,
+      "to_component": "P13",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P13",
+      "from_port": null,
+      "to_component": "P12",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P12",
+      "from_port": null,
+      "to_component": "P17",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P16",
+      "from_port": null,
+      "to_component": "P41",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P41",
+      "from_port": null,
+      "to_component": "P42",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P41",
+      "from_port": null,
+      "to_component": "P19",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P19",
+      "from_port": null,
+      "to_component": "P22",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P22",
+      "from_port": null,
+      "to_component": "P21",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P22",
+      "from_port": null,
+      "to_component": "P24",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P21",
+      "from_port": null,
+      "to_component": "P20",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P24",
+      "from_port": null,
+      "to_component": "P23",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P32",
+      "from_port": null,
+      "to_component": "P30",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P32",
+      "from_port": null,
+      "to_component": "P31",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P30",
+      "from_port": null,
+      "to_component": "P25",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P31",
+      "from_port": null,
+      "to_component": "P25",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P25",
+      "from_port": null,
+      "to_component": "P26",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P25",
+      "from_port": null,
+      "to_component": "P27",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P25",
+      "from_port": null,
+      "to_component": "P28",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P25",
+      "from_port": null,
+      "to_component": "P29",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P2",
+      "from_port": "3",
+      "to_component": "P6",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P17",
+      "from_port": null,
+      "to_component": "P14",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P14",
+      "from_port": "2",
+      "to_component": "P16",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P14",
+      "from_port": "3",
+      "to_component": "P18",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P25",
+      "from_port": null,
+      "to_component": "P33",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P25",
+      "from_port": null,
+      "to_component": "P35",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P25",
+      "from_port": null,
+      "to_component": "P37",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P25",
+      "from_port": null,
+      "to_component": "P39",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P33",
+      "from_port": "2",
+      "to_component": "P43",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 0.8
+    },
+    {
+      "from_component": "P33",
+      "from_port": "4",
+      "to_component": "P43",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 0.8
+    },
+    {
+      "from_component": "P35",
+      "from_port": "2",
+      "to_component": "P43",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 0.8
+    },
+    {
+      "from_component": "P35",
+      "from_port": "4",
+      "to_component": "P43",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 0.8
+    },
+    {
+      "from_component": "P37",
+      "from_port": "2",
+      "to_component": "P44",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 0.8
+    },
+    {
+      "from_component": "P37",
+      "from_port": "4",
+      "to_component": "P44",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 0.8
+    },
+    {
+      "from_component": "P39",
+      "from_port": "2",
+      "to_component": "P44",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 0.8
+    },
+    {
+      "from_component": "P39",
+      "from_port": "4",
+      "to_component": "P44",
+      "to_port": null,
+      "connection_type": "pneumatic",
+      "confidence": 0.8
+    },
+    {
+      "from_component": "P34",
+      "from_port": null,
+      "to_component": "P33",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P36",
+      "from_port": null,
+      "to_component": "P35",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P38",
+      "from_port": null,
+      "to_component": "P37",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P40",
+      "from_port": null,
+      "to_component": "P39",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P15",
+      "from_port": null,
+      "to_component": "P14",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "P4",
+      "from_port": null,
+      "to_component": "P3",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    }
+  ],
+  "io": [
+    {
+      "tag": "Y33A",
+      "direction": "DO",
+      "linked_component": "P33",
+      "description": "Valve 1 coil A (example)",
+      "plc_address": "%Q0.0"
+    },
+    {
+      "tag": "Y33B",
+      "direction": "DO",
+      "linked_component": "P33",
+      "description": "Valve 1 coil B (example)",
+      "plc_address": "%Q0.1"
+    },
+    {
+      "tag": "Y35A",
+      "direction": "DO",
+      "linked_component": "P35",
+      "description": "Valve 2 coil A (example)",
+      "plc_address": "%Q0.2"
+    },
+    {
+      "tag": "Y35B",
+      "direction": "DO",
+      "linked_component": "P35",
+      "description": "Valve 2 coil B (example)",
+      "plc_address": "%Q0.3"
+    },
+    {
+      "tag": "Y37A",
+      "direction": "DO",
+      "linked_component": "P37",
+      "description": "Valve 3 coil A (example)",
+      "plc_address": "%Q0.4"
+    },
+    {
+      "tag": "Y37B",
+      "direction": "DO",
+      "linked_component": "P37",
+      "description": "Valve 3 coil B (example)",
+      "plc_address": "%Q0.5"
+    },
+    {
+      "tag": "Y39A",
+      "direction": "DO",
+      "linked_component": "P39",
+      "description": "Valve 4 coil A (example)",
+      "plc_address": "%Q0.6"
+    },
+    {
+      "tag": "Y39B",
+      "direction": "DO",
+      "linked_component": "P39",
+      "description": "Valve 4 coil B (example)",
+      "plc_address": "%Q0.7"
+    },
+    {
+      "tag": "Y14",
+      "direction": "DO",
+      "linked_component": "P14",
+      "description": "Vacuum valve coil (example)",
+      "plc_address": "%Q1.0"
+    },
+    {
+      "tag": "X8",
+      "direction": "DI",
+      "linked_component": "P8",
+      "description": "Supply pressure switch (example)",
+      "plc_address": "%I0.0"
+    }
+  ],
+  "requirements": {
+    "existing_controller": "unknown",
+    "target_controller": "Ethernet-based PLC"
+  },
+  "unknowns": [
+    "Supply pressure not on the drawing",
+    "Vacuum switch symbol next to item 19 has no item number",
+    "Manufacturer of the two PMHPD3T200-20Z units not confirmed"
+  ],
+  "assumptions": [
+    "Part codes come from the drawing's text layer; topology was read by hand.",
+    "The I/O list is an illustrative example, it is not on the drawing."
+  ]
+}

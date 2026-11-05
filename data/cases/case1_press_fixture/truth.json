@@ -1,0 +1,219 @@
+{
+  "components": [
+    {
+      "id": "SU1",
+      "type": "service_unit",
+      "label": "FRL unit",
+      "confidence": 1.0,
+      "pressure_bar": 6
+    },
+    {
+      "id": "V3",
+      "type": "valve",
+      "label": "E-stop dump valve",
+      "confidence": 1.0,
+      "valve_function": "3/2 single solenoid spring return",
+      "voltage": "24VDC",
+      "safety_status": "engineer_confirmed_safety_related"
+    },
+    {
+      "id": "V1",
+      "type": "valve",
+      "label": "Clamp valve",
+      "confidence": 1.0,
+      "part_number": "LEGACY-V52S-A",
+      "valve_function": "5/2 single solenoid spring return",
+      "voltage": "24VDC"
+    },
+    {
+      "id": "V2",
+      "type": "valve",
+      "label": "Press valve",
+      "confidence": 1.0,
+      "part_number": "LEGACY-V52D-A",
+      "valve_function": "5/2 double solenoid",
+      "voltage": "24VDC"
+    },
+    {
+      "id": "C1",
+      "type": "cylinder",
+      "label": "Clamp cylinder",
+      "confidence": 1.0,
+      "bore_mm": 40,
+      "stroke_mm": 100,
+      "load_kg": 20,
+      "stroke_time_s": 0.5
+    },
+    {
+      "id": "C2",
+      "type": "cylinder",
+      "label": "Press cylinder",
+      "confidence": 1.0,
+      "bore_mm": 63,
+      "stroke_mm": 200,
+      "load_kg": 100,
+      "stroke_time_s": 1.0
+    },
+    {
+      "id": "S1",
+      "type": "sensor",
+      "label": "Clamp retracted",
+      "confidence": 1.0
+    },
+    {
+      "id": "S2",
+      "type": "sensor",
+      "label": "Clamp extended",
+      "confidence": 1.0
+    },
+    {
+      "id": "S3",
+      "type": "sensor",
+      "label": "Press retracted",
+      "confidence": 1.0
+    }
+  ],
+  "connections": [
+    {
+      "from_component": "SU1",
+      "from_port": "OUT",
+      "to_component": "V3",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V3",
+      "from_port": "2",
+      "to_component": "V1",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V3",
+      "from_port": "2",
+      "to_component": "V2",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V1",
+      "from_port": "2",
+      "to_component": "C1",
+      "to_port": "A",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V1",
+      "from_port": "4",
+      "to_component": "C1",
+      "to_port": "B",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V2",
+      "from_port": "2",
+      "to_component": "C2",
+      "to_port": "A",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V2",
+      "from_port": "4",
+      "to_component": "C2",
+      "to_port": "B",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "S1",
+      "from_port": null,
+      "to_component": "C1",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "S2",
+      "from_port": null,
+      "to_component": "C1",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "S3",
+      "from_port": null,
+      "to_component": "C2",
+      "to_port": null,
+      "connection_type": "signal",
+      "confidence": 1.0
+    }
+  ],
+  "io": [
+    {
+      "tag": "Y1",
+      "direction": "DO",
+      "linked_component": "V1",
+      "description": "Clamp valve coil",
+      "plc_address": "%Q0.0"
+    },
+    {
+      "tag": "Y2A",
+      "direction": "DO",
+      "linked_component": "V2",
+      "description": "Press extend coil",
+      "plc_address": "%Q0.1"
+    },
+    {
+      "tag": "Y2B",
+      "direction": "DO",
+      "linked_component": "V2",
+      "description": "Press retract coil",
+      "plc_address": "%Q0.2"
+    },
+    {
+      "tag": "Y3",
+      "direction": "DO",
+      "linked_component": "V3",
+      "description": "E-stop dump valve coil",
+      "plc_address": "%Q0.3"
+    },
+    {
+      "tag": "X1",
+      "direction": "DI",
+      "linked_component": "S1",
+      "description": "Clamp retracted",
+      "plc_address": "%I0.0"
+    },
+    {
+      "tag": "X2",
+      "direction": "DI",
+      "linked_component": "S2",
+      "description": "Clamp extended",
+      "plc_address": "%I0.1"
+    },
+    {
+      "tag": "X3",
+      "direction": "DI",
+      "linked_component": "S3",
+      "description": "Press retracted",
+      "plc_address": "%I0.2"
+    }
+  ],
+  "requirements": {
+    "supply_pressure_bar": 6,
+    "cycles_per_hour": 400,
+    "existing_controller": "legacy relay/PLC",
+    "target_controller": "Ethernet-based PLC"
+  },
+  "unknowns": [],
+  "assumptions": [
+    "Loads are as stated by the plant; vertical-lift worst case assumed."
+  ]
+}

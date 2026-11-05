@@ -1,0 +1,8 @@
+tag,direction,linked_component,description,plc_address
+Y1,DO,V1,Clamp valve coil,%Q0.0
+Y2A,DO,V2,Press extend coil,%Q0.1
+Y2B,DO,V2,Press retract coil,%Q0.2
+Y3,DO,V3,E-stop dump valve coil,%Q0.3
+X1,DI,S1,Clamp retracted,%I0.0
+X2,DI,S2,Clamp extended,%I0.1
+X3,DI,S3,Press retracted,%I0.2

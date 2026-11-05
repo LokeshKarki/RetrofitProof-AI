@@ -1,0 +1,36 @@
+{
+  "WARNING": "PLACEHOLDER written by the tool author. Replace with picks made independently by a domain expert.",
+  "like_for_like": {
+    "C1": "DEMO-CYL-40",
+    "C2": "DEMO-CYL-63",
+    "V1": "DEMO-VLV-52S-700",
+    "V2": "DEMO-VLV-52D-700",
+    "SU1": "DEMO-FRL-14",
+    "S1": "DEMO-SNS-PNP",
+    "S2": "DEMO-SNS-PNP",
+    "S3": "DEMO-SNS-PNP",
+    "V3": "ESCALATE"
+  },
+  "expected_flags": [
+    [
+      "SAFETY_ESCALATE",
+      "V3"
+    ],
+    [
+      "ONE_END_SENSOR",
+      "C2"
+    ],
+    [
+      "FAILSAFE_ASSUMPTION",
+      "V1"
+    ],
+    [
+      "FAILSAFE_ASSUMPTION",
+      "V2"
+    ]
+  ],
+  "truth_safety": [
+    "V3"
+  ],
+  "manual_minutes": 90
+}

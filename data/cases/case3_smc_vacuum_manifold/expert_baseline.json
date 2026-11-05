@@ -1,0 +1,81 @@
+{
+  "WARNING": "The expected Festo codes are the refined project sheet, which is ALSO loaded into the cross-reference knowledge base. So this case is a smoke test of the pipeline, not accuracy evidence. manual_minutes is a PLACEHOLDER.",
+  "like_for_like": {
+    "P1": "QST-16",
+    "P2": "MS6-EM1-3/8",
+    "P3": "MS6-LFR-3/8-D7-C-R-M-AS",
+    "P4": null,
+    "P5": "MA-40-1,0-R1/8-MPA-E-RG",
+    "P6": "UC-1/4",
+    "P7": "QS-3/8-16",
+    "P8": "SPAN-B11R-M5F-PN-PN-L1",
+    "P9": "QS-3/8-16",
+    "P10": null,
+    "P11": "QST-16",
+    "P12": "QS-10H-6",
+    "P13": "QS-16H-10",
+    "P14": "MHE3-M1H-3/2G-1/8-K",
+    "P15": null,
+    "P16": "QS-1/8-6",
+    "P17": "QS-1/8-6",
+    "P18": "UC-1/8",
+    "P19": "QST-6",
+    "P20": "ESS-40-BN",
+    "P21": null,
+    "P22": "QST-6",
+    "P23": "ESS-40-BN",
+    "P24": null,
+    "P25": "VABM-B10-30E-G34-4",
+    "P26": "UC-3/8",
+    "P27": "UC-3/8",
+    "P28": "UC-3/8",
+    "P29": "UC-3/8",
+    "P30": "QS-3/8-12",
+    "P31": "QS-3/8-12",
+    "P32": "QST-16-12",
+    "P33": "VUVS-L30-P53C-MD-G38-F8-1C1",
+    "P34": "NEBV-H1G2-KN-2.5-N-LE2",
+    "P35": "VUVS-L30-P53C-MD-G38-F8-1C1",
+    "P36": "NEBV-H1G2-KN-2.5-N-LE2",
+    "P37": "VUVS-L30-P53C-MD-G38-F8-1C1",
+    "P38": "NEBV-H1G2-KN-2.5-N-LE2",
+    "P39": "VUVS-L30-P53C-MD-G38-F8-1C1",
+    "P40": "NEBV-H1G2-KN-2.5-N-LE2",
+    "P41": "VN-10-H-T3-PQ2-VQ2-RO1",
+    "P42": "UC-QS-8H",
+    "P43": null,
+    "P44": null
+  },
+  "expected_flags": [
+    [
+      "NO_PRESSURE",
+      "CIRCUIT"
+    ],
+    [
+      "CLOSED_CENTRE_TRAPPED_PRESSURE",
+      "P33"
+    ],
+    [
+      "CLOSED_CENTRE_TRAPPED_PRESSURE",
+      "P35"
+    ],
+    [
+      "CLOSED_CENTRE_TRAPPED_PRESSURE",
+      "P37"
+    ],
+    [
+      "CLOSED_CENTRE_TRAPPED_PRESSURE",
+      "P39"
+    ],
+    [
+      "VACUUM_LOSS_LOAD_DROP",
+      "P20"
+    ],
+    [
+      "VACUUM_LOSS_LOAD_DROP",
+      "P23"
+    ]
+  ],
+  "truth_safety": [],
+  "manual_minutes": 120
+}

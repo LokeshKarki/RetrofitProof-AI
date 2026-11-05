@@ -1,0 +1,4 @@
+tag,direction,linked_component,description,plc_address
+Y1,DO,V1,Infeed pusher,%Q0.0
+Y2,DO,V2,Lid press,%Q0.1
+X1,DI,S1,Pusher home,%I0.0

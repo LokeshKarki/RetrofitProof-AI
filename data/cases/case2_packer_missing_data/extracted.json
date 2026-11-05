@@ -1,0 +1,162 @@
+{
+  "components": [
+    {
+      "id": "SU1",
+      "type": "service_unit",
+      "label": "FRL unit",
+      "confidence": 1.0
+    },
+    {
+      "id": "V1",
+      "type": "valve",
+      "label": "Pusher valve",
+      "confidence": 1.0,
+      "valve_function": "5/2 single solenoid spring return"
+    },
+    {
+      "id": "V2",
+      "type": "valve",
+      "label": "Lid press valve",
+      "confidence": 1.0,
+      "valve_function": "5/2 single solenoid spring return"
+    },
+    {
+      "id": "V3",
+      "type": "valve",
+      "label": "Sealer valve",
+      "confidence": 1.0
+    },
+    {
+      "id": "C1",
+      "type": "cylinder",
+      "label": "Infeed pusher",
+      "confidence": 1.0,
+      "bore_mm": 32,
+      "stroke_mm": 150,
+      "load_kg": 5,
+      "stroke_time_s": 0.6
+    },
+    {
+      "id": "C2",
+      "type": "cylinder",
+      "label": "Lid press",
+      "confidence": 1.0,
+      "bore_mm": 32,
+      "stroke_mm": 80,
+      "load_kg": 3
+    },
+    {
+      "id": "C3",
+      "type": "cylinder",
+      "label": "Sealer",
+      "confidence": 0.6,
+      "bore_mm": 50,
+      "stroke_mm": 250
+    }
+  ],
+  "connections": [
+    {
+      "from_component": "SU1",
+      "from_port": "OUT",
+      "to_component": "V1",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "SU1",
+      "from_port": "OUT",
+      "to_component": "V2",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "SU1",
+      "from_port": "OUT",
+      "to_component": "V3",
+      "to_port": "1",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V1",
+      "from_port": "2",
+      "to_component": "C1",
+      "to_port": "A",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V1",
+      "from_port": "4",
+      "to_component": "C1",
+      "to_port": "B",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V2",
+      "from_port": "2",
+      "to_component": "C2",
+      "to_port": "A",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V2",
+      "from_port": "4",
+      "to_component": "C2",
+      "to_port": "B",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V3",
+      "from_port": "2",
+      "to_component": "C3",
+      "to_port": "A",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    },
+    {
+      "from_component": "V3",
+      "from_port": "4",
+      "to_component": "C3",
+      "to_port": "B",
+      "connection_type": "pneumatic",
+      "confidence": 1.0
+    }
+  ],
+  "io": [
+    {
+      "tag": "Y1",
+      "direction": "DO",
+      "linked_component": "V1",
+      "description": "Infeed pusher",
+      "plc_address": "%Q0.0"
+    },
+    {
+      "tag": "Y2",
+      "direction": "DO",
+      "linked_component": "V2",
+      "description": "Lid press",
+      "plc_address": "%Q0.1"
+    },
+    {
+      "tag": "X1",
+      "direction": "DI",
+      "linked_component": "S1",
+      "description": "Pusher home",
+      "plc_address": "%I0.0"
+    }
+  ],
+  "requirements": {
+    "target_controller": "Ethernet-based PLC"
+  },
+  "unknowns": [
+    "Supply pressure not on drawing",
+    "V3 coil/valve function unreadable"
+  ],
+  "assumptions": []
+}

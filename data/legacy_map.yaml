@@ -1,0 +1,5 @@
+# Legacy part lookup. Entries here are GENERIC / ILLUSTRATIVE. Add real competitor or Indian-brand
+# part numbers ONLY when verified from a datasheet; leave verification_status honest.
+# Used to fill missing component fields when a legacy part_number is known.
+- {part_number: LEGACY-V52S-A, description: "generic 5/2 single solenoid valve", valve_function: "5/2 single solenoid spring return", voltage: 24VDC, source_type: synthetic, verification_status: illustrative}
+- {part_number: LEGACY-V52D-A, description: "generic 5/2 double solenoid valve", valve_function: "5/2 double solenoid", voltage: 24VDC, source_type: synthetic, verification_status: illustrative}

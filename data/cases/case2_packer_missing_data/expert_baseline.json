@@ -1,0 +1,41 @@
+{
+  "WARNING": "PLACEHOLDER written by the tool author. Replace with picks made independently by a domain expert.",
+  "like_for_like": {
+    "C1": "DEMO-CYL-32",
+    "C2": "DEMO-CYL-32",
+    "C3": "DEMO-CYL-50",
+    "V1": "DEMO-VLV-52S-400",
+    "V2": "DEMO-VLV-52S-400",
+    "V3": null,
+    "SU1": "DEMO-FRL-14",
+    "S1": "DEMO-SNS-PNP"
+  },
+  "expected_flags": [
+    [
+      "NO_PRESSURE",
+      "CIRCUIT"
+    ],
+    [
+      "VALVE_FUNCTION_UNKNOWN",
+      "V3"
+    ],
+    [
+      "NO_END_SENSORS",
+      "C2"
+    ],
+    [
+      "NO_END_SENSORS",
+      "C3"
+    ],
+    [
+      "NO_DO",
+      "V3"
+    ],
+    [
+      "ONE_END_SENSOR",
+      "C1"
+    ]
+  ],
+  "truth_safety": [],
+  "manual_minutes": 75
+}
