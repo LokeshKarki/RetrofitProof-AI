@@ -11,6 +11,8 @@ const SECTIONS = [
 const COMP_TYPES = ["cylinder", "valve", "service_unit", "sensor", "fitting", "other", "pressure_switch", "gauge", "regulator",
   "shutoff_valve", "shuttle_valve", "silencer", "manifold", "vacuum_ejector", "vacuum_pad", "accessory"];
 const ALT_TITLES = { like_for_like: "Like-for-like", instrumented: "Instrumented upgrade", electrification: "Electrification (screening)" };
+const EMPTY_CIRCUIT = { components: [], connections: [], io: [], requirements: {}, unknowns: [], assumptions: [] };
+const EMPTY_HINT = "Nothing loaded yet. Pick a recent case on step 1, or upload a diagram and extract it.";
 
 /* ---------- tiny DOM helpers ---------- */
 const PROPS = new Set(["value", "checked", "selected", "disabled"]);
@@ -83,9 +85,11 @@ function cleanCircuit() {
 function scheduleAnalyze() { clearTimeout(S.timer); S.timer = setTimeout(runAnalyze, 300); }
 async function runAnalyze() {
   const my = ++S.seq;
+  const circuit = cleanCircuit();
+  if (!circuit.components.length) return clearResults();
   try {
     const r = await (await api("/api/analyze", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ circuit: cleanCircuit(), roi_inputs: S.roi }) })).json();
+      body: JSON.stringify({ circuit, roi_inputs: S.roi }) })).json();
     if (my !== S.seq) return;                     // a newer edit superseded this response
     S.result = r; renderResults();
   } catch (e) { toast("Analysis failed: " + e.message, true); }
@@ -103,7 +107,7 @@ function show(id) {
   document.querySelectorAll(".sec").forEach(s => s.classList.toggle("active", s.id === "s-" + id));
   document.querySelectorAll(".step").forEach(s => s.classList.toggle("active", s.dataset.id === id));
   history.replaceState(null, "", "#" + id);
-  if (id === "eval" && !S.evalRows) loadEval();
+  if (id === "eval" && S.result && !S.evalRows) loadEval();
 }
 
 /* ---------- editable tables ---------- */
@@ -155,7 +159,9 @@ function editTable(key, cols, blank, rowCls) {
 function renderReview() {
   const sec = $("#s-review"); sec.replaceChildren();
   const cases = S.cases || [];
-  const sel = h("select", { onchange: e => loadCase(e.target.value) }, cases.map(c => h("option", { value: c }, c)));
+  const sel = h("select", { onchange: e => e.target.value && loadCase(e.target.value) },
+    h("option", { value: "" }, cases.length ? "Select a case…" : "No cases available"),
+    cases.map(c => h("option", { value: c }, c)));
   sel.value = S.caseName || "";
   const imgIn = h("input", { type: "file", accept: "image/*,.pdf,application/pdf" });
   const ioIn = h("input", { type: "file", accept: ".csv,.xlsx" });
@@ -190,32 +196,28 @@ function renderReview() {
       clearTimeout(timeoutId);
     }
   };
-  const req = S.circuit.requirements || (S.circuit.requirements = {});
-  const reqField = (k, label, num) => h("label", { class: "field" }, label,
-    h("input", { type: num ? "number" : "text", step: "any", value: req[k] ?? "",
-      onchange: e => { const v = e.target.value; req[k] = v === "" ? null : (num ? Number(v) : v); scheduleAnalyze(); } }));
+  S.circuit.requirements || (S.circuit.requirements = {});
 
   sec.append(h("h2", null, "1 · Review extraction"),
     h("p", { class: "sub" }, "The AI reads the diagram and I/O list. A technician corrects anything it got wrong before any analysis is trusted."),
     h("div", { class: "grid g2" },
       h("div", { class: "card" }, h("h3", null, "Input"),
-        h("div", { class: "row" }, h("label", { class: "field" }, "Demo case", sel)),
-        h("p", { class: "small muted" }, "Demo extractions are simulated with deliberate errors so the correction step has something to fix."),
+        h("div", { class: "row" }, h("label", { class: "field" }, "Recent cases", sel)),
+        h("p", { class: "small muted" }, "Nothing is loaded until a case is selected. Recent-case extractions are simulated with deliberate errors so the correction step has something to fix."),
         h("div", { class: "dz" }, h("div", { class: "row" },
           h("label", { class: "field" }, "Diagram (image or PDF)", imgIn), h("label", { class: "field" }, "I/O list (CSV/XLSX)", ioIn), btn))),
       h("div", { class: "card" }, h("h3", null, "Diagram"),
         S.image ? h("img", { class: "preview", src: S.image, alt: "Legacy diagram" })
-          : h("div", { class: "noimg" }, "No diagram image for this case. Upload one on the left, or add data/cases/<case>/diagram.png"))),
+          : h("div", { class: "noimg" }, S.caseName
+            ? "No diagram image for this case. Upload one on the left, or add data/cases/<case>/diagram.png"
+            : "No diagram loaded. Select a recent case or upload a diagram on the left."))),
     h("div", { class: "card" }, h("h3", null, "Components"), h("p", { class: "small muted" }, "Amber = confidence below 0.7. Red = potential safety function. Edits re-run the analysis automatically."),
       editTable("components", COMP_COLS, { id: "", type: "cylinder", qty: 1, safety_status: "unknown", confidence: 1 }, compRowCls)),
     h("div", { class: "grid g2" },
       h("div", { class: "card" }, h("h3", null, "Connections (port-level)"),
         editTable("connections", CONN_COLS, { from_component: "", to_component: "", connection_type: "pneumatic", confidence: 1 })),
       h("div", { class: "card" }, h("h3", null, "I/O list"),
-        editTable("io", IO_COLS, { tag: "", direction: "DI" }))),
-    h("div", { class: "card" }, h("h3", null, "Circuit requirements"),
-      h("div", { class: "row" }, reqField("supply_pressure_bar", "Supply pressure (bar)", true), reqField("target_controller", "Target controller"),
-        reqField("existing_controller", "Existing controller"), reqField("cycles_per_hour", "Cycles / hour", true))));
+        editTable("io", IO_COLS, { tag: "", direction: "DI" }))));
 }
 
 /* ---------- 2. risk + graph ---------- */
@@ -491,6 +493,15 @@ function renderEval() {
 }
 
 /* ---------- aggregate rendering ---------- */
+const RESULT_SECTIONS = [["risk", "2 · Risk flags & circuit graph"], ["alts", "3 · Retrofit alternatives"],
+  ["tests", "4 · Test plan & I/O migration"], ["roi", "5 · ROI & export"], ["eval", "6 · Evaluation"]];
+function clearResults() {
+  S.result = null;
+  $("#kpis").replaceChildren();
+  const b = $("#badge-risk"); if (b) b.style.display = "none";
+  RESULT_SECTIONS.forEach(([id, title]) =>
+    $("#s-" + id).replaceChildren(h("h2", null, title), h("div", { class: "card muted" }, EMPTY_HINT)));
+}
 function renderResults() {
   const r = S.result, a = altByName(S.alt);
   const cov = r.coverage || { pct: null, matched: 0, in_scope: 0, direct: 0 };
@@ -504,6 +515,7 @@ function renderResults() {
     h("div", { class: "kpi" }, h("div", { class: "v" }, Math.max(1, Math.round(r.runtime_s * 1000)) + " ms"), h("div", { class: "l" }, "Analysis time")));
   const b = $("#badge-risk"); b.style.display = crit ? "" : "none"; b.textContent = crit;
   renderRisk(); renderAlts(); renderTests(); renderRoi();
+  if (S.evalRows) renderEval(); else if ($("#s-eval").classList.contains("active")) loadEval();
 }
 
 /* ---------- boot ---------- */
@@ -516,8 +528,11 @@ async function boot() {
     const meta = await (await api("/api/meta")).json();
     S.roiDefaults = meta.roi_defaults; S.roi = { ...meta.roi_defaults };
     S.cases = await (await api("/api/cases")).json();
+    S.circuit = structuredClone(EMPTY_CIRCUIT);
     buildNav();
-    if (S.cases.length) await loadCase(S.cases[0]); else toast("No demo cases found. Run python tools/make_cases.py", true);
+    renderReview();
+    clearResults();
+    if (!S.cases.length) toast("No cases found. Run python tools/make_cases.py", true);
   } catch (e) { toast("Cannot reach the API: " + e.message, true); }
 }
 boot();
