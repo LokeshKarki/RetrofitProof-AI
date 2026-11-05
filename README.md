@@ -74,3 +74,4 @@ Other commands
 - More series rules (SMC SY, AS, VHS, ZPT...) once verified against datasheets. Valve and vacuum parts are thin in the request data.
 - Embedding search for fuzzy matches; use the confirm/reject log as training data.
 - Case 3 topology was read by hand from the drawing, and its I/O list is an invented example.
+
