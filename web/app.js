@@ -109,21 +109,17 @@ function show(id) {
 /* ---------- editable tables ---------- */
 const COMP_COLS = [
   { key: "id", label: "ID", cls: "id", w: 60 }, { key: "callout_no", label: "Item", type: "number", w: 56 }, { key: "type", label: "Type", w: 130, type: "select", options: COMP_TYPES },
-  { key: "label", label: "Label", w: 150 }, { key: "manufacturer", label: "Maker", w: 80 }, { key: "part_number", label: "Legacy part no.", w: 150 },
+  { key: "label", label: "Label", w: 150 }, { key: "manufacturer", label: "Maker", w: 80 }, { key: "part_number", label: "Type Code", w: 150 },
   { key: "qty", label: "Qty", type: "number", w: 50 },
-  { key: "bore_mm", label: "Bore mm", type: "number" }, { key: "stroke_mm", label: "Stroke mm", type: "number" },
-  { key: "load_kg", label: "Load kg", type: "number" }, { key: "stroke_time_s", label: "Stroke s", type: "number" },
-  { key: "pressure_bar", label: "Press. bar", type: "number" }, { key: "valve_function", label: "Valve function", w: 220 },
-  { key: "voltage", label: "Voltage", w: 80 },
   { key: "safety_status", label: "Safety status", w: 250, type: "select", options: ["unknown", "potentially_safety_related", "engineer_confirmed_safety_related", "engineer_confirmed_not_safety_related"] },
-  { key: "confidence", label: "Conf.", type: "number", step: "0.05" }];
+  { key: "confidence", label: "Confidence Score", type: "number", step: "0.05", w: 110 }];
 const CONN_COLS = [
   { key: "from_component", label: "From" }, { key: "from_port", label: "Port" }, { key: "to_component", label: "To" },
   { key: "to_port", label: "Port" }, { key: "connection_type", label: "Kind", type: "select", options: ["pneumatic", "signal"] },
-  { key: "confidence", label: "Conf.", type: "number", step: "0.05" }];
+  { key: "confidence", label: "Confidence Score", type: "number", step: "0.05", w: 110 }];
 const IO_COLS = [
   { key: "tag", label: "Tag" }, { key: "direction", label: "Dir", type: "select", options: ["DI", "DO", "AI", "AO"] },
-  { key: "linked_component", label: "Component" }, { key: "description", label: "Description", w: 170 }, { key: "plc_address", label: "PLC address" }];
+  { key: "linked_component", label: "Component" }, { key: "description", label: "Description", w: 170 }];
 const compRowCls = r => (r.safety_status || "").includes("safety_related") && !(r.safety_status || "").includes("not_") ? "safe"
   : (r.confidence != null && r.confidence !== "" && r.confidence < 0.7) ? "low" : "";
 
