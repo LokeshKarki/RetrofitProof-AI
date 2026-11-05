@@ -4,11 +4,13 @@ Decision support only. Part matches come from earlier cross-reference requests (
 DEMO catalog. Nothing here is a design approval.
 
 ## Run
-    pip install -r requirements.txt
-    # .env in THIS folder (not .venv):  GEMINI_API_KEY=...   (optional) GEMINI_MODEL=<model AI Studio lists for your key>
-    python tools/make_cases.py          # regenerate demo cases (3 cases; case 3 is the real SMC circuit)
-    uvicorn server:app --reload --port 8000
-    # open http://localhost:8000
+- Create the virtual environment: `python -m venv .venv`
+- Activate it: `source .venv/Scripts/activate` (Git Bash on Windows; PowerShell: `.venv\Scripts\Activate.ps1`; Linux/macOS: `source .venv/bin/activate`)
+- Install dependencies: `python -m pip install -r requirements.txt`
+- Add a `.env` in THIS folder (not `.venv`): `GEMINI_API_KEY=...` and optionally `GEMINI_MODEL=<model AI Studio lists for your key>`
+- Regenerate demo cases: `python tools/make_cases.py` (3 cases; case 3 is the real SMC circuit)
+- Start the server: `uvicorn server:app --reload --port 8000`
+- Open http://localhost:8000
 
 Other commands
 - `python -m tests.test_core`      offline tests (series rules, lookup, every-part-gets-a-line, exports, feedback)
